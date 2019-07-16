@@ -17,10 +17,19 @@ def get_rg_jobs_data():
     # with open("output.html", "w") as file:
     #     file.write(str(soup.encode("utf-8")))
 
-    jobs_div = soup.find(class_="col-1")
-    jobs_header = jobs_div.find("h2")
+    jobs_section = soup.find(class_="col-1")
+    jobs_header = jobs_section.find("h2")
 
     print(jobs_header.next_sibling.strip(),'\n')
+
+    jobs_divs = jobs_section.find_all("div", id=False)
+
+    counter = 0
+    for job in jobs_divs:
+        if counter % 2 == 0:
+            job_content = job.text.strip().replace("Read more >>","")
+            print(job_content)
+        counter = counter + 1
 
 def get_jib_jobs_data():
     url = "http://www.jobsinbda.com/jm-ajax/get_listings/"
